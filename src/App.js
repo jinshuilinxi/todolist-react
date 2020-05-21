@@ -2,6 +2,16 @@ import React, { Component } from 'react';
 import { Button, Input } from 'antd'
 import './App.css';
 
+
+function TodoItems(props) {
+  const items = [...props.todoList]
+  const listItems = items.map((todo, index) =>
+    <li key={index}>{todo.text}</li>
+  );
+  return (
+    <ul>{listItems}</ul>
+  );  
+}
 class App extends Component {
   constructor(props) {
     super(props);
@@ -11,11 +21,20 @@ class App extends Component {
     }
   }
   onChange = e => {
+    const { value } = e.target
     this.setState({
-      inputValue: e
+      inputValue: value
     })
   }
-  
+  addList = () => {
+    const list = [...this.state.todoList]
+    list.push({
+      text: this.state.inputValue
+    })
+    this.setState({
+      todoList: list
+    })
+  }
   render() {
     // const { value } = this.props
     return (
@@ -25,7 +44,8 @@ class App extends Component {
           placeholder="请添加一条todo"
           allowClear
           onChange={this.onChange} />
-        <Button type="primary">添加</Button>
+        <Button type="primary" onClick={this.addList}>添加</Button>
+        <TodoItems todoList={this.state.todoList}></TodoItems>
       </div>
     );
   }
