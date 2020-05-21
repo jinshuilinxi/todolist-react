@@ -1,17 +1,7 @@
 import React, { Component } from 'react';
-import { Button, Input } from 'antd'
+import { Button, Input, List } from 'antd'
 import './App.css';
 
-
-function TodoItems(props) {
-  const items = [...props.todoList]
-  const listItems = items.map((todo, index) =>
-    <li key={index}>{todo.text}</li>
-  );
-  return (
-    <ul>{listItems}</ul>
-  );  
-}
 class App extends Component {
   constructor(props) {
     super(props);
@@ -36,7 +26,6 @@ class App extends Component {
     })
   }
   render() {
-    // const { value } = this.props
     return (
       <div className="App">
         <Input
@@ -45,7 +34,13 @@ class App extends Component {
           allowClear
           onChange={this.onChange} />
         <Button type="primary" onClick={this.addList}>添加</Button>
-        <TodoItems todoList={this.state.todoList}></TodoItems>
+        <List
+          size="small"
+          className="todo-list"
+          bordered
+          dataSource={this.state.todoList}
+          renderItem={item => <List.Item>{item.text}</List.Item>}
+        />
       </div>
     );
   }
