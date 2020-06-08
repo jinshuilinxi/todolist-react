@@ -19,11 +19,17 @@ class App extends Component {
   addList = () => {
     const list = [...this.state.todoList]
     list.push({
-      text: this.state.inputValue
+      text: this.state.inputValue,
+      hasDone: false
     })
     this.setState({
-      todoList: list
+      todoList: list,
+      inputValue: ''
     })
+  }
+  changeState = (item) => {
+    console.log(item)
+    item.hasDone = true
   }
   render() {
     return (
@@ -33,13 +39,21 @@ class App extends Component {
           placeholder="请添加一条todo"
           allowClear
           onChange={this.onChange} />
-        <Button type="primary" onClick={this.addList}>添加</Button>
+        <Button type="primary" onClick={this.addList} disabled={!this.state.inputValue}>添加</Button>
         <List
           size="small"
           className="todo-list"
           bordered
           dataSource={this.state.todoList}
-          renderItem={item => <List.Item>{item.text}</List.Item>}
+          renderItem={item => (
+            <List.Item
+              actions={[
+                <Button type="link" onClick={this.changeState(item)}>done</Button>
+              ]}
+              className={item.hasDone ? 'todo-done' : 'todo-not-done'}>
+              {item.text}
+            </List.Item>
+          )}
         />
       </div>
     );

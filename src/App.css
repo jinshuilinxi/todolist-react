@@ -36,6 +36,12 @@
 .todo-list {
   margin-top: 40px;
 }
+.todo-done {
+  background-color: #61dafb;
+}
+.todo-not-done {
+  background-color: red;
+}
 
 @keyframes App-logo-spin {
   from {
